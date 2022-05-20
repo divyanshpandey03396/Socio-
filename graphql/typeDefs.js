@@ -1,13 +1,13 @@
-const { gql } = require('apollo-server');
+const gql = require("graphql-tag");
 
 module.exports = gql`
   type Post {
     id: ID!
-    body: String!
-    createdAt: String!
-    username: String!
-    comments: [Comment]!
-    likes: [Like]!
+    body: String
+    createdAt: String
+    username: String
+    comments: [Comment]
+    likes: [Like]
     likeCount: Int!
     commentCount: Int!
   }
@@ -22,18 +22,18 @@ module.exports = gql`
     createdAt: String!
     username: String!
   }
+  input RegisterInput {
+    username: String!
+    password: String!
+    confirmPassword: String!
+    email: String!
+  }
   type User {
     id: ID!
     email: String!
     token: String!
     username: String!
     createdAt: String!
-  }
-  input RegisterInput {
-    username: String!
-    password: String!
-    confirmPassword: String!
-    email: String!
   }
   type Query {
     getPosts: [Post]
@@ -44,8 +44,11 @@ module.exports = gql`
     login(username: String!, password: String!): User!
     createPost(body: String!): Post!
     deletePost(postId: ID!): String!
-    createComment(postId: String!, body: String!): Post!
+    createComment(postId: ID!, body: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
+  }
+  type Subscription {
+    newPost: Post!
   }
 `;
