@@ -1,14 +1,28 @@
-import React from "react";
-import { Card, Icon, Image, Label, Button, Popup } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+// Moment
 import moment from "moment";
 
-function PostCard({
+// Semantice ui
+import { Card, Icon, Image, Label, Button, Popup } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+
+// Components
+import LikeButton from "./LikeButton.jsx";
+import DeleteButton from "./DeleteButton.jsx";
+
+// Context
+import { AuthContext } from "../context/auth";
+import { useContext } from "react";
+import MyPopup from "../util/MyPopup.js";
+
+const PostCard = ({
   post: { body, createdAt, commentCount, likeCount, id, likes, username },
-}) {
+}) => {
+  const { userData } = useContext(AuthContext);
+  //console.log(likes);
+
   return (
     <Card fluid>
-      <Card.Content>
+      <Card.Content as={Link} to={`/posts/${id}`}>
         <Image
           floated="right"
           size="mini"
@@ -16,11 +30,14 @@ function PostCard({
         />
         <Card.Header>{username}</Card.Header>
         <Card.Meta as={Link} to={`/posts/${id}`}>
-          {moment(createdAt).fromNow(true)}
+          {moment(createdAt).fromNow()}
         </Card.Meta>
         <Card.Description>{body}</Card.Description>
-        <Card.Content extra>
-          <Button labelPosition="right" as={Link} to={`/posts/${id}`} >
+      </Card.Content>
+      <Card.Content extra>
+        <LikeButton userData={userData} post={{ id, likes, likeCount }} />
+        <MyPopup content="Comment on Post">
+          <Button labelPosition="right" as={Link} to={`/posts/${id}`}>
             <Button color="blue" basic>
               <Icon name="comments" />
             </Button>
@@ -28,10 +45,13 @@ function PostCard({
               {commentCount}
             </Label>
           </Button>
-        </Card.Content>
+        </MyPopup>
+        {userData && userData.username === username && (
+          <DeleteButton postId={id} />
+        )}
       </Card.Content>
     </Card>
   );
-}
+};
 
 export default PostCard;

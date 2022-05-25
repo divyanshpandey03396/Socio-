@@ -1,25 +1,39 @@
-import React from 'react'
-import { useQuery } from "@apollo/client";
-import { FETCH_POSTS_QUERY } from "../util/graphql";
-import { Grid, Transition } from "semantic-ui-react";
-import PostCard from '../components/PostCard';
+import React, { useContext } from "react";
 
-function Home() {
-  const {loading,data}=useQuery(FETCH_POSTS_QUERY);
+// Apollo client
+import { useQuery } from "@apollo/client";
+
+// GraphQL
+import { FETCH_POSTS_QUERY } from "../util/graphql";
+
+// Semantic ui
+import { Grid, Transition } from "semantic-ui-react";
+
+// Components
+import PostCard from "../components/PostCard";
+import PostForm from "../components/PostForm";
+
+// Context
+import { AuthContext } from "../context/auth";
+
+const Home = () => {
+  const { loading, data } = useQuery(FETCH_POSTS_QUERY);
   let posts = null;
+  const { userData } = useContext(AuthContext);
+
   if (data) posts = data.getPosts;
 
   return (
     <Grid columns={2}>
       <Grid.Row className="page-title">
-        <h1>Recent posts </h1>
+        <h1>Recent posts</h1>
       </Grid.Row>
       <Grid.Row>
-        {/* {userData && (
+        {userData && (
           <Grid.Column>
             <PostForm />
           </Grid.Column>
-        )} */}
+        )}
         {loading ? (
           <h1>Loading posts...</h1>
         ) : (
@@ -37,4 +51,4 @@ function Home() {
   );
 };
 
-export default Home
+export default Home;

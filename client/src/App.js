@@ -1,19 +1,27 @@
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Container } from "semantic-ui-react";
 import "semantic-ui-css/semantic.min.css";
 import "./App.css";
+
+// Components
 import MenuBar from "./components/MenuBar";
+
+// Context
+import { AuthContext, AuthProvider } from "./context/auth";
+import { useContext } from "react";
+
+import AuthRoute from "./util/AuthRoute";
+
+// Pages
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import { Container } from "semantic-ui-react";
-import { AuthProvider } from "./context/auth";
-import AuthRoute from "./util/AuthRoute";
+import SinglePost from "./pages/SinglePost";
 
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <Router>
         <Container>
           <MenuBar />
           <Routes>
@@ -24,9 +32,11 @@ function App() {
             <Route path="/" element={<AuthRoute />}>
               <Route path="/register" element={<Register />} />
             </Route>
+            <Route path="/posts/:postId" element={<SinglePost />} />
           </Routes>
         </Container>
-      </BrowserRouter>
+      </Router>
+      {/* // <div>App</div> */}
     </AuthProvider>
   );
 }
