@@ -7,8 +7,7 @@ import "./App.css";
 import MenuBar from "./components/MenuBar";
 
 // Context
-import { AuthContext, AuthProvider } from "./context/auth";
-import { useContext } from "react";
+import {  AuthProvider } from "./context/auth";
 
 import AuthRoute from "./util/AuthRoute";
 

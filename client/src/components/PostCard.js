@@ -2,7 +2,7 @@
 import moment from "moment";
 
 // Semantice ui
-import { Card, Icon, Image, Label, Button, Popup } from "semantic-ui-react";
+import { Card, Icon, Image, Label, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 // Components
