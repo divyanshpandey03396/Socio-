@@ -1,8 +1,10 @@
+require ("dotenv").config(); 
+
 const { ApolloServer } = require("apollo-server");
 const PORT = process.env.PORT || 5000;
+MONGODB=process.env.MONGODB;
 
 // Database
-const { MONGODB } = require("./config");
 const mongoose = require("mongoose");
 
 // Graph QL
